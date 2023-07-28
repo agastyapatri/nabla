@@ -29,6 +29,8 @@ class Linear:
             activation:str,
             dtype=np.float32
             ) -> None:
+        self._input = input_size
+        self._output = output_size
         self.w = np.random.randn(input_size, output_size)
         self.b = np.random.randn(output_size, 1)
         self.activation = activation
@@ -38,9 +40,13 @@ class Linear:
         z = np.dot(x, self.w) + self.b.T
         return _activation_map[self.activation](z)
     
+    def __repr__(self, ) -> str:
+        return f"Linear(input_size = {self._input}, output_size = {self._output}, activation={self.activation})"
 
 
-class Network:
+
+
+class MLP:
     """
     Defining a network comprised by Layers
     
@@ -49,11 +55,25 @@ class Network:
     """
     def __init__(self, structure:dict) -> None:
         self.struct = structure 
-    
+        self.net = []
+        for i in self.struct:
+            [input_size, output_size], activation = self.struct[i]
+            self.net.append(Linear(input_size, output_size, activation))
+
     def __call__(self, x:np.ndarray) -> np.ndarray:
-        pass
+        out = self.net[0](x)
+        j = 1 
+        while(j < len(self.net)):
+            out = self.net[j](out)
+            j+=1 
+        return out 
+    
+    def __repr__(self, ) -> str:
+        repr = "\n"
+        for i in self.net:
+            repr += i.__repr__() + "\n"
 
-
+        return repr
 
 
 
