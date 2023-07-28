@@ -32,13 +32,13 @@ class Linear:
         self._input = input_size
         self._output = output_size
         self.w = np.random.randn(input_size, output_size)
-        self.b = np.random.randn(output_size, 1)
         self.activation = activation
         
 
     def __call__(self, x:np.ndarray) -> np.ndarray:
-        z = np.dot(x, self.w) + self.b.T
-        return _activation_map[self.activation](z)
+        z = np.dot(x, self.w) 
+        b = np.random.randn(z.shape[0], z.shape[1])
+        return _activation_map[self.activation](z+b)
     
     def __repr__(self, ) -> str:
         return f"Linear(input_size = {self._input}, output_size = {self._output}, activation={self.activation})"
@@ -48,7 +48,7 @@ class Linear:
 
 class MLP:
     """
-    Defining a network comprised by Layers
+    Defining a Multi Layer Perceptron comprised by Linear Layers. 
     
     [args]:
         structure:dict - {layer_idx: [[input_size, output_size], activation_function]}

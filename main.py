@@ -1,5 +1,7 @@
 import numpy as np 
-from neuron.neuron import Linear, MLP
+from neuron.network import Linear, MLP
+from nabla import utils  
+
 
 linear = Linear(
     input_size=10,
@@ -9,20 +11,13 @@ linear = Linear(
 x = np.random.randn(1, 784)
 
 
-
 structure = {
-    0 : [[784, 392], "relu"],
+    0: [[784, 392], "relu"],
     1: [[392, 196], "relu"],
     2: [[196, 98], "relu"],
     3: [[98, 10], "relu"]
 }
 net = MLP(structure)
 
-import timeit
-start = timeit.default_timer()
 outs = net(x)
 
-end = timeit.default_timer()
-print(end-start)
-
-print(outs.shape)
