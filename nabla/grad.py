@@ -13,10 +13,10 @@ network and the desired output vector.
 from utils import _derivatives
 
 _derivative_map = {
-    "relu": None, 
-    "sigmoid": None,
-    "leakyrelu": None,
-    "tanh": None,
+    "relu": _derivatives.dReLU, 
+    "sigmoid": _derivatives.dSigmoid,
+    "leakyrelu": _derivatives.dLeakyReLU,
+    "tanh": _derivatives.dTanh,
 }
 
 def backpropagation() -> None:

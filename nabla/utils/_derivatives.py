@@ -3,16 +3,19 @@ Defining the derivatives of the
 activation functions defined in neuron.activations
 """
 import numpy as np 
-import scipy as sp
 
 def dSigmoid(x:np.ndarray) -> np.ndarray:
-    pass  
-
+    return np.exp(x) / np.square((1 + np.exp(x)))
+    
 def dReLU(x:np.ndarray) -> np.ndarray:
-    pass 
+    x[x>0] = 1
+    x[x<=0] = 0
+    return x
 
 def dTanh(x:np.ndarray) -> np.ndarray:
-    pass 
+    return np.square((1 / np.cosh(x)))
 
-def dLeakyReLU(x:np.ndarray) -> np.ndarray:
-    pass 
+def dLeakyReLU(x:np.ndarray, slope:float) -> np.ndarray:
+    x[x>0] = 1
+    x[x<0] = -slope 
+    return x 

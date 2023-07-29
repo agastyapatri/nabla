@@ -9,16 +9,12 @@ def ReLU(x:np.ndarray, dtype=np.float32) -> np.ndarray:
     
 
 
-def LeakyReLU(x:np.ndarray, slope:float=0.01) -> np.ndarray:
+def LeakyReLU(x:np.ndarray, slope:float) -> np.ndarray:
     """
-    Leaky Rectified Linear Unit
-        
-    [args]: 
-    x:float - the input
-    slope:float - the negative slope of the line if x< 0 
+        if x > 0: return x
+        else:   return slope*x 
     """
-    comp = np.zeros((x.shape))
-    return comp 
+    return np.maximum(slope*x, x)
 
 
 def Tanh(x:np.ndarray) -> np.ndarray:
