@@ -32,6 +32,7 @@ class Linear:
         self._input = input_size
         self._output = output_size
         self.w = np.random.randn(input_size, output_size)
+        self.b = np.random.randn(1, output_size)
         self.activation = activation
         
 
@@ -41,10 +42,10 @@ class Linear:
     def __repr__(self, ) -> str:
         return f"Linear(input_size = {self._input}, output_size = {self._output}, activation={self.activation})"
 
-    def _forward(self, x:np.ndarray):
-        z = np.dot(x, self.w) 
-        b = np.random.randn(z.shape[0], z.shape[1])
-        return z+b, _activation_map[self.activation](z+b)
+    def _forward(self, x) -> None:
+        z = np.dot(x, self.w) + self.b 
+        return z, _activation_map[self.activation](z)
+        
 
 
 
@@ -77,8 +78,11 @@ class MLP:
 
         return repr
 
-    def TestFunction() -> None:
-        pass
+    def __getitem__(self, i) -> None:
+        return self.net[i]
+
+    def __len__(self, ) -> int:
+        return len(self.net)
 
 
 

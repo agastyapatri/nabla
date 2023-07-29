@@ -21,18 +21,14 @@ def LeakyReLU(x:np.ndarray, slope:float=0.01) -> np.ndarray:
     return comp 
 
 
-def Tanh(x:float) -> float:
+def Tanh(x:np.ndarray) -> np.ndarray:
     """
     The Hyperbolic Tan activation function 
     """
     return np.tanh(x)
 
-def Sigmoid(x:float) -> float:
+def Sigmoid(x:np.ndarray) -> np.ndarray:
     """
     The sigmoid activation function
     """
     return np.exp(x)/(1 + np.exp(x))
-
-
-
-    

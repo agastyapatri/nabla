@@ -6,8 +6,7 @@ Requisite Functionalities:
     2. Find a way to plot the training + validation performance of the target neural network
     3. 
 
-
 """
-
 import matplotlib.pyplot as plt 
 import numpy as np 
+import scipy as sp

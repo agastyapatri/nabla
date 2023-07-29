@@ -1,14 +1,7 @@
 import numpy as np 
 from neuron.network import Linear, MLP
 
-# linear = Linear(
-#     input_size=10,
-#     output_size=50,
-#     activation="relu"
-# )
-x = np.random.randn(1, 784)
-
- 
+x = np.random.randn(1, 784) 
 structure = {
     0: [[784, 392], "relu"],
     1: [[392, 196], "relu"],
@@ -17,7 +10,9 @@ structure = {
 }
 net = MLP(structure)
 
-outs = net(x)
+for i in range(len(net)):
+    print(net[i].w.shape)
+
 
 # import matplotlib.pyplot as plt 
 # def mse1d(x, a):
