@@ -11,6 +11,7 @@ minimize a measure of the difference between the actual output vector of the
 network and the desired output vector.
 """
 from utils import _derivatives
+from ..neuron import network
 
 _derivative_map = {
     "relu": _derivatives.dReLU, 
@@ -19,14 +20,15 @@ _derivative_map = {
     "tanh": _derivatives.dTanh,
 }
 
-def backpropagation() -> None:
+
+
+def backpropagation(network, loss) -> None:
     """
     Function to perform backpropagation, given a loss function and 
 
     [args]:
     """
-    dw = [] #   dC/dw
-    db = [] #   dC/db
+    
     pass
 
 

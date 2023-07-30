@@ -1,5 +1,4 @@
 import numpy as np 
-import scipy as sp 
 
 def ReLU(x:np.ndarray, dtype=np.float32) -> np.ndarray:
     """
@@ -28,3 +27,4 @@ def Sigmoid(x:np.ndarray) -> np.ndarray:
     The sigmoid activation function
     """
     return np.exp(x)/(1 + np.exp(x))
+
