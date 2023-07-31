@@ -35,18 +35,23 @@ class Linear:
         self.b = np.random.randn(1, output_size)
         self.activation = activation
         
-
     def __call__(self, x:np.ndarray) -> np.ndarray:
-        return self._forward(x)[1]
+        z = np.dot(x, self.w) + self.b 
+        return z, _activation_map[self.activation](z)
+    
+    
+    def parameters(self, ) -> dict:
+        return {
+            "weights" : self.w,
+            "biases"  : self.b
+        }
     
     def __repr__(self, ) -> str:
         return f"Linear(input_size = {self._input}, output_size = {self._output}, activation={self.activation})"
+    
 
-    def _forward(self, x) -> None:
-        z = np.dot(x, self.w) + self.b 
-        return z, _activation_map[self.activation](z)
+    
         
-
 
 
 class MLP:
@@ -64,10 +69,10 @@ class MLP:
             self.net.append(Linear(input_size, output_size, activation))
 
     def __call__(self, x:np.ndarray) -> np.ndarray:
-        out = self.net[0](x)
+        out = self.net[0](x)[1]
         j = 1 
         while(j < len(self.net)):
-            out = self.net[j](out)
+            out = self.net[j](out)[1]
             j+=1 
         return out 
     

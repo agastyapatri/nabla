@@ -19,3 +19,10 @@ def dLeakyReLU(x:np.ndarray, slope:float) -> np.ndarray:
     x[x>0] = 1
     x[x<0] = -slope 
     return x 
+
+
+def dMSE(self, preds:np.ndarray, labels:np.ndarray) -> np.ndarray:
+    return  np.mean(np.square(preds-labels))
+    
+
+
