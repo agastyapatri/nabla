@@ -21,7 +21,6 @@ def dLeakyReLU(x:np.ndarray, slope:float) -> np.ndarray:
     return x 
 
 
-def dMSE(self, preds:np.ndarray, labels:np.ndarray) -> np.ndarray:
-    return  np.mean(np.square(preds-labels))
+
     
 

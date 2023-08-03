@@ -1,7 +1,9 @@
 import numpy as np 
 import nabla 
 from neuron.network import Linear, MLP
-from nabla.loss import Loss
+from nabla.loss import MSELoss
+from nabla.grad import backprop, descent
+
 
 x = np.random.randn(1, 784) 
 y = np.random.randn(1, 10)
@@ -12,7 +14,10 @@ structure = {
     3: [[98, 10], "relu"]
 }
 net = MLP(structure)
-loss_fun = Loss.MSELoss
+loss_fun = MSELoss()
+grad_w, grad_b = backprop(network=net, loss=loss_fun, x=x, y=y)
+descent(net, grad_w, grad_b)
 
-nabla.backward(network=net, loss=loss_fun, x=x, y=y)
+
+
 

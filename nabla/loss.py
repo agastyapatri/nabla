@@ -3,47 +3,39 @@ Loss Functions to be used during the training process
 """
 import numpy as np 
 
-class Loss:
-    def __init__(self, option:str) -> None:
-        self.option = option
-        self._loss_map = {
-            "mse" : self.MSELoss,
-            "cel" : self.CELoss,
-        }
+class MSELoss:
 
-    def MSELoss(self, preds:np.ndarray, labels:np.ndarray) -> np.ndarray:
-        return np.mean(np.square(preds-labels))
-
-
-    def CELoss(self, x:np.ndarray, y:np.ndarray) -> np.ndarray:
+    def __call__(
+            self, 
+            x:np.ndarray, 
+            y:np.ndarray
+            ) -> np.ndarray:
+        return np.mean(np.square(x-y))
+    
+    def grad(
+            self, 
+            x:np.ndarray, 
+            y:np.ndarray
+            ) -> np.ndarray:
         """
-        The Cross Entropy Loss between two distributions.
-
-        [args]:
-            x:  distributoin 1
-            y:  distributoin 2
-
+        derivative of MSE with respect to x
         """
+        return 2*np.mean(x - y)
+
+
+class CELoss:
+    def __init__(self, ) -> None:
         pass
+
+    def __call__(
+            self, 
+            x:np.ndarray, 
+            y:np.ndarray
+            ) -> None:
+        return x 
     
-    def __call__(self, x:np.ndarray, y:np.ndarray):
-        return self._loss_map[self.option.lower()](x, y)
-    
-    
-    def backward(self):
+    def grad(self, x:np.ndarray, y:np.ndarray):
         pass 
-    
 
 
     
-if __name__ == "__main__":
-    loss_fn = Loss("mse")
-    x = np.random.randn(100, 100)
-    y = np.random.randn(100, 100)
-    import timeit
-    start = timeit.default_timer()
-
-    loss_fn(x, y)
-    end = timeit.default_timer()
-    print(end-start)
-

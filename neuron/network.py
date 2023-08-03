@@ -80,4 +80,3 @@ class MLP:
         return len(self.net)
 
 
-
