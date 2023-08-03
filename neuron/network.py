@@ -39,20 +39,9 @@ class Linear:
         z = np.dot(x, self.w) + self.b 
         return z, _activation_map[self.activation](z)
     
-    
-    def parameters(self, ) -> dict:
-        return {
-            "weights" : self.w,
-            "biases"  : self.b
-        }
-    
     def __repr__(self, ) -> str:
         return f"Linear(input_size = {self._input}, output_size = {self._output}, activation={self.activation})"
     
-
-    
-        
-
 
 class MLP:
     """
@@ -67,8 +56,10 @@ class MLP:
         for i in self.struct:
             [input_size, output_size], activation = self.struct[i]
             self.net.append(Linear(input_size, output_size, activation))
+        self.W = [self.net[i].w for i in range(len(self.net))]
+        self.B = [self.net[i].b for i in range(len(self.net))]
 
-    def __call__(self, x:np.ndarray) -> np.ndarray:
+    def __call__(self, x:np.ndarray) -> tuple:
         out = self.net[0](x)[1]
         j = 1 
         while(j < len(self.net)):
@@ -80,10 +71,9 @@ class MLP:
         repr = "\n"
         for i in self.net:
             repr += i.__repr__() + "\n"
-
         return repr
 
-    def __getitem__(self, i) -> None:
+    def __getitem__(self, i:int) -> Linear:
         return self.net[i]
 
     def __len__(self, ) -> int:
