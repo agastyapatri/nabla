@@ -4,7 +4,6 @@ from neuron.network import Linear, MLP
 from nabla.loss import MSELoss
 from nabla.grad import backprop, descent
 
-
 x = np.random.randn(1, 784) 
 y = np.random.randn(1, 10)
 structure = {
@@ -16,7 +15,9 @@ structure = {
 net = MLP(structure)
 loss_fun = MSELoss()
 grad_w, grad_b = backprop(network=net, loss=loss_fun, x=x, y=y)
-descent(net, grad_w, grad_b)
+
+
+new_net = descent(net, grad_w, grad_b, learning_rate=0.01)
 
 
 

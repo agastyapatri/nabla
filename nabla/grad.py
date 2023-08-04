@@ -22,11 +22,14 @@ def backprop(
         ) -> tuple:
     """
     Performing Gradient Descent on a given network 
+
+    [args]:
+        network:    The network whose parameters need to be updated
+        loss:   The Loss function to be differentiated
+        x:  Input
     """
-    Z = [] 
-    A = [] 
-    Z.append(network[0](x)[0])
-    A.append(network[0](x)[1])
+    Z = [network[0](x)[0]] 
+    A = [network[0](x)[1]] 
     
     #   forward pass; finding the outputs and activations at each layer  
     for i in range(1, len(network)):
@@ -34,15 +37,13 @@ def backprop(
         A.append(a)
         Z.append(z)
 
-    #   backward pas
-    grad_W = []
-    grad_B = []
-    loss_grad = loss.grad(network(x), y)
-
     #   delta is the error in the output layer
+    loss_grad = loss.grad(network(x), y)
     delta = _derivative_map[network[-1].activation](Z[-1])*loss_grad 
+    grad_W = [delta*A[-1]]
+    grad_B = [delta]
     
-    #   iterating through the reversed network  
+    #   backward pass; finding the gradients of all the layers starting from the output layer.
     i = 1
     while i < len(network):
         layer = network[-(i+1)]
@@ -61,7 +62,8 @@ def backprop(
 def descent(
         network:network.MLP, 
         grad_W:list, 
-        grad_B:list
+        grad_B:list,
+        learning_rate:float
         ) -> None:
     """
     Function to perform gradient descent using the gradient values of the loss function with respect to the parameters
@@ -72,7 +74,15 @@ def descent(
         grad_B: the list of the gradients wrt B
         
     """
-    print(len(network))
-    print(len(grad_W))
-    print(len(grad_B))
+    import copy 
+    new_net = copy.deepcopy(network)
+    for i in range(len(new_net)):
+        w, b = new_net.W[i], new_net.B[i]
+        dw, db = grad_W[-(i+1)], grad_B[-(i+1)]
+        new_net.W[i] = w - learning_rate*dw
+        new_net.B[i] = b - learning_rate*db
+    return new_net
+
+
+
 
