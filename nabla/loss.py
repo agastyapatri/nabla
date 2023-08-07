@@ -4,7 +4,9 @@ Loss Functions to be used during the training process
 import numpy as np 
 
 class MSELoss:
-
+    """
+    Mean Squared Error Loss 
+    """
     def __call__(
             self, 
             x:np.ndarray, 
@@ -24,18 +26,18 @@ class MSELoss:
 
 
 class CELoss:
-    def __init__(self, ) -> None:
-        pass
-
+    """
+    Cross Entropy Loss 
+    """
     def __call__(
             self, 
-            x:np.ndarray, 
+            a:np.ndarray, 
             y:np.ndarray
-            ) -> None:
-        return x 
+            ) -> np.ndarray:
+        return -1*np.mean(y*np.log(a) + (1-y)*np.log(1-a)) 
     
     def grad(self, x:np.ndarray, y:np.ndarray):
-        pass 
 
+        pass 
 
     

@@ -66,21 +66,23 @@ def descent(
         learning_rate:float
         ) -> None:
     """
-    Function to perform gradient descent using the gradient values of the loss function with respect to the parameters
+    One iteration of parameter updation
     
     [args]:
         network: the model whose parameters are to be updated
         grad_W: the list of the gradients wrt W
         grad_B: the list of the gradients wrt B
-        
     """
     import copy 
     new_net = copy.deepcopy(network)
+    new_w, new_b = [], []
     for i in range(len(new_net)):
         w, b = new_net.W[i], new_net.B[i]
         dw, db = grad_W[-(i+1)], grad_B[-(i+1)]
-        new_net.W[i] = w - learning_rate*dw
-        new_net.B[i] = b - learning_rate*db
+        new_w.append(w - learning_rate*dw)
+        new_b.append(b - learning_rate*db)
+    new_net.W = new_w
+    new_net.B = new_b
     return new_net
 
 

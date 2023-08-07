@@ -15,10 +15,3 @@ structure = {
 net = MLP(structure)
 loss_fun = MSELoss()
 grad_w, grad_b = backprop(network=net, loss=loss_fun, x=x, y=y)
-
-
-new_net = descent(net, grad_w, grad_b, learning_rate=0.01)
-
-
-
-

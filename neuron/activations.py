@@ -8,7 +8,7 @@ def ReLU(x:np.ndarray, dtype=np.float32) -> np.ndarray:
     
 
 
-def LeakyReLU(x:np.ndarray, slope:float) -> np.ndarray:
+def LeakyReLU(x:np.ndarray, slope:float=0.01) -> np.ndarray:
     """
         if x > 0: return x
         else:   return slope*x 
