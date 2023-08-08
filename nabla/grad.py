@@ -5,6 +5,7 @@ from nabla.utils import _derivatives
 from neuron.activations import *
 from neuron import network 
 from nabla.loss import MSELoss
+import numpy as np 
 
 _derivative_map = {
     "relu": _derivatives.dReLU, 

@@ -1,17 +1,36 @@
 import numpy as np 
-import nabla 
-from neuron.network import Linear, MLP
+from nabla import Neuron 
+from neuron.activations import *
+from neuron import Linear 
 from nabla.loss import MSELoss
-from nabla.grad import backprop, descent
+np.random.seed(0)
 
-x = np.random.randn(1, 784) 
-y = np.random.randn(1, 10)
-structure = {
-    0: [[784, 392], "relu"],
-    1: [[392, 196], "relu"],
-    2: [[196, 98], "relu"],
-    3: [[98, 10], "relu"]
-}
-net = MLP(structure)
-loss_fun = MSELoss()
-grad_w, grad_b = backprop(network=net, loss=loss_fun, x=x, y=y)
+
+input_features = 10
+output_features = 20 
+num_samples = 100
+
+
+
+x = np.random.randn(num_samples, input_features)
+w = np.random.randn(output_features, input_features)
+b = np.random.randn(1, output_features)
+
+a1 = Sigmoid(np.dot(x, w.T) + b)
+
+# print(w.shape)
+# print(b.shape)
+
+print(a1.shape)
+
+
+
+import torch 
+import torch.nn as nn 
+
+
+layer = nn.Linear(10, 20)
+x = torch.randn(100, 10)
+# print(layer.weight.shape)
+# print(layer.bias.shape)
+print(layer(x).shape)

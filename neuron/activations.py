@@ -1,12 +1,20 @@
 import numpy as np 
 
+__all__ = [
+    "ReLU",
+    "LeakyReLU",
+    "Tanh",
+    "Sigmoid"
+]
+
+
+
 def ReLU(x:np.ndarray, dtype=np.float32) -> np.ndarray:
     """
     Rectified Linear Unit
     """
     return np.maximum(x, np.zeros((x.shape)))
     
-
 
 def LeakyReLU(x:np.ndarray, slope:float=0.01) -> np.ndarray:
     """

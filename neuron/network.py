@@ -16,9 +16,15 @@ class Linear:
     Defining a Single Linear Layer
     
     [args]:
-        input_size:int - the number of features in the input vector == number of neurons in this layer
-        output_size:int - the number of output features == the number of neurons in the next layer
+        input_size:int - the number of features in the input vector == number of neurons in the previous layer
+        output_size:int - the number of output features == the number of neurons in this layer
         activation:str - the activation function being applied to the outputs of the layer
+
+        shape(weight) = (output x input)
+        shape(bias) = (output, 1)
+        shape(x) = (num_samples, input)
+        shape(z) = ()
+
 
 
     """
@@ -31,13 +37,13 @@ class Linear:
             ) -> None:
         self._input = input_size
         self._output = output_size
-        self.w = np.random.randn(input_size, output_size)
-        self.b = np.random.randn(1, output_size)
+        self.w = np.random.randn(output_size, input_size)
+        self.b = np.random.randn(output_size, 1)
         self.activation = activation
         
     def __call__(self, x:np.ndarray) -> np.ndarray:
-        z = np.dot(x, self.w) + self.b 
-        return z, _activation_map[self.activation](z)
+        z = np.dot(self.w, x.T) + self.b 
+        return _activation_map[self.activation](z)
     
     def __repr__(self, ) -> str:
         return f"Linear(input_size = {self._input}, output_size = {self._output}, activation={self.activation})"
@@ -63,7 +69,7 @@ class MLP:
         out = self.net[0](x)[1]
         j = 1 
         while(j < len(self.net)):
-            out = self.net[j](out)[1]
+            out = self.net[j](out)
             j+=1 
         return out 
     
