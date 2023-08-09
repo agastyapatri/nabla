@@ -1,36 +1,32 @@
 import numpy as np 
 from nabla import Neuron 
 from neuron.activations import *
-from neuron import Linear 
+from neuron import Linear, MLP
 from nabla.loss import MSELoss
 np.random.seed(0)
-
-
-input_features = 10
-output_features = 20 
-num_samples = 100
-
-
-
-x = np.random.randn(num_samples, input_features)
-w = np.random.randn(output_features, input_features)
-b = np.random.randn(1, output_features)
-
-a1 = Sigmoid(np.dot(x, w.T) + b)
-
-# print(w.shape)
-# print(b.shape)
-
-print(a1.shape)
-
-
-
 import torch 
 import torch.nn as nn 
 
 
-layer = nn.Linear(10, 20)
-x = torch.randn(100, 10)
-# print(layer.weight.shape)
-# print(layer.bias.shape)
-print(layer(x).shape)
+
+x = np.random.randn(100, 10)
+layer_nabla = Linear(input_dim=10, output_dim=20)
+
+
+struct = {
+    0   : [[10, 20], "relu"],
+    1   : [[20, 40], "relu"],
+    2   : [[40, 80], "relu"],
+    3   : [[80, 40], "relu"],
+    4   : [[40, 20], "relu"],
+    5   : [[20, 10], "relu"],
+}
+
+
+net = MLP(structure=struct)
+
+import timeit
+start = timeit.default_timer()
+net(x)
+end = timeit.default_timer()
+print(end-start)

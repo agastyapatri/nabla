@@ -24,26 +24,26 @@ class Linear:
         shape(bias) = (output, 1)
         shape(x) = (num_samples, input)
         shape(z) = ()
-
-
-
     """
     def __init__(
             self, 
-            input_size:int, 
-            output_size:int,
-            activation:str,
+            input_dim:int, 
+            output_dim:int,
+            activation:str=None,
             dtype=np.float32
             ) -> None:
-        self._input = input_size
-        self._output = output_size
-        self.w = np.random.randn(output_size, input_size)
-        self.b = np.random.randn(output_size, 1)
+        self._input = input_dim
+        self._output = output_dim
+        self.weight = np.random.randn(output_dim, input_dim)
+        self.bias = np.random.randn(output_dim)
         self.activation = activation
         
     def __call__(self, x:np.ndarray) -> np.ndarray:
-        z = np.dot(self.w, x.T) + self.b 
-        return _activation_map[self.activation](z)
+        z = np.dot(x, self.weight.T) + self.bias 
+        if self.activation == None:
+            return z 
+        else:
+            return _activation_map[self.activation](z)
     
     def __repr__(self, ) -> str:
         return f"Linear(input_size = {self._input}, output_size = {self._output}, activation={self.activation})"
@@ -62,11 +62,11 @@ class MLP:
         for i in self.struct:
             [input_size, output_size], activation = self.struct[i]
             self.net.append(Linear(input_size, output_size, activation))
-        self.W = [self.net[i].w for i in range(len(self.net))]
-        self.B = [self.net[i].b for i in range(len(self.net))]
+        self.W = [self.net[i].weight for i in range(len(self.net))]
+        self.B = [self.net[i].bias for i in range(len(self.net))]
 
     def __call__(self, x:np.ndarray) -> tuple:
-        out = self.net[0](x)[1]
+        out = self.net[0](x)
         j = 1 
         while(j < len(self.net)):
             out = self.net[j](out)
@@ -75,8 +75,11 @@ class MLP:
     
     def __repr__(self, ) -> str:
         repr = "\n"
+        repr += "MultiLayerPerceptron(\n"
         for i in self.net:
-            repr += i.__repr__() + "\n"
+            repr += "   " + i.__repr__() + "\n"
+        repr += ")\n"
+
         return repr
 
     def __getitem__(self, i:int) -> Linear:
