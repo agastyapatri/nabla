@@ -2,8 +2,8 @@
 Module to conduct the learning process. This will include optimization algorithms, backpropagation, training, testing, etc.
 """
 from nabla.utils import _derivatives
-from neuron.activations import *
-from neuron import network 
+from nabla.nn.activations import *
+from nabla.nn import linear 
 from nabla.loss import MSELoss
 import numpy as np 
 
@@ -16,7 +16,7 @@ _derivative_map = {
 
 
 def backprop(
-        network:network.MLP, 
+        network:linear.MLP, 
         loss:MSELoss, 
         x:np.ndarray,
         y:np.ndarray,
@@ -61,7 +61,7 @@ def backprop(
 
 
 def descent(
-        network:network.MLP, 
+        network:linear.MLP, 
         grad_W:list, 
         grad_B:list,
         learning_rate:float

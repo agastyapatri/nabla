@@ -1,6 +1,6 @@
 import numpy as np
 import scipy as sp
-from neuron import activations
+from nabla.nn import activations
 DTYPE = np.float32
 
 _activation_map = {
