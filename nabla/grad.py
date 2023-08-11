@@ -3,7 +3,7 @@ Module to conduct the learning process. This will include optimization algorithm
 """
 from nabla.utils import _derivatives
 from nabla.nn.activations import *
-from nabla.nn import linear 
+from nabla.nn.layers import linear 
 from nabla.loss import MSELoss
 import numpy as np 
 

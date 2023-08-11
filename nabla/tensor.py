@@ -4,12 +4,13 @@ np.random.seed(0)
 
 class Tensor:
     """
-    The Central data structure of nabla. This is built on top of np.ndarrays to enable computational graphs and autodiff.
-    
+    The Central data structure of NABLA. This is built on top of np.ndarrays to enable computational graphs and autodiff.
+    Tensor is a class that wraps around numpy arrays. There is no way to auto-populate Tensors without calling numpy.
+
     [args]:
-    data:   the np.ndarray underlying the tensor
-    requires_grad: True if not a leaf tensor else False
-    operation:  the operation which comprises the Tensor
+        data:   the np.ndarray underlying the tensor
+        requires_grad: True if not a leaf tensor else False
+        operation:  the operation which comprises the Tensor
     """
     def __init__(
             self, 
@@ -26,18 +27,18 @@ class Tensor:
 
     #   Arithmetic Operations
     def __add__(self, other) -> None:
-        return Tensor(self.data + other.data, requires_grad=True, operation="add")
+        return Tensor(self.data + other.data, requires_grad=(self.req_grad or other.req_grad), operation="add")
     
     def __sub__(self, other) -> None:
-        return Tensor(self.data - other.data, requires_grad=True, operation="sub")
+        return Tensor(self.data - other.data, requires_grad=(self.req_grad or other.req_grad), operation="sub")
     
     def __mul__(self, other) -> None:
         if isinstance(other, int) or isinstance(other, float):
-            return Tensor(self.data*other, requires_grad=True, operation="scalarmul")
+            return Tensor(self.data*other, requires_grad=self.req_grad, operation="scalarmul")
         if self.shape[-1] != other.shape[0]:
             raise RuntimeError(f"Incompatible shapes:    {self.shape} and {other.shape}")
             
-        return Tensor(self.data@other.data, requires_grad=True, operation="matmul")
+        return Tensor(self.data@other.data, requires_grad=(self.req_grad or other.req_grad), operation="matmul")
     
 
     #   other operations
@@ -70,11 +71,9 @@ class Tensor:
 
     def reshape(self, size:tuple) -> None:
         return Tensor(np.reshape(self.data, size), requires_grad=self.req_grad)
-
-
-
-
-
+    
+    def transpose(self, ) -> None:
+        return Tensor(self.data.T, requires_grad=self.req_grad)
 
     #   Metadata
     def __repr__(self, ) -> str:
@@ -91,6 +90,10 @@ class Tensor:
 
     def __len__(self, ) -> int:
         return len(self.data)
+
+
+
+
 
 if __name__ == "__main__":
     x = np.random.randn(10, 10)
