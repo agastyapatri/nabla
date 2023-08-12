@@ -47,15 +47,15 @@ class Linear:
         return self.forward(x)[1]
     
     def forward(self, x:Tensor):
-        z = x*self.weight.transpose() + self.bias 
-    
+        z = x@self.weight.transpose() + self.bias
+        
         if self.activation == None:
             return z, z 
         else:
             return z, _activation_map[self.activation](z)
 
     def __repr__(self, ) -> str:
-        return f"Linear(input_size = {self._input}, output_size = {self._output}, activation={self.activation})"
+        return f"Linear(input_size = {self._input}, output_size = {self._output}, activation = {self.activation})"
     
 
 

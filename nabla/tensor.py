@@ -33,13 +33,10 @@ class Tensor:
         return Tensor(self.data - other.data, requires_grad=(self.req_grad or other.req_grad), operation="sub")
     
     def __mul__(self, other) -> None:
-        if isinstance(other, int) or isinstance(other, float):
-            return Tensor(self.data*other, requires_grad=self.req_grad, operation="scalarmul")
-        if self.shape[-1] != other.shape[0]:
-            raise RuntimeError(f"Incompatible shapes:    {self.shape} and {other.shape}")
-            
-        return Tensor(self.data@other.data, requires_grad=(self.req_grad or other.req_grad), operation="matmul")
+        return Tensor(self.data * other.data, requires_grad=(self.req_grad or other.req_grad), operation="mul")
     
+    def __matmul__(self, other):
+        return Tensor(self.data @ other.data, requires_grad=(self.req_grad or other.req_grad), operation="matmul") 
 
     #   other operations
     def mean(self, axis) -> None:

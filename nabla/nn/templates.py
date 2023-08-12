@@ -12,7 +12,9 @@ To be added:
 import numpy as np 
 from .layers.linear import Linear 
 
-
+#-----------------------------------------------------------------------#
+# NEEDS TO BE EDITED
+#-----------------------------------------------------------------------#
 class MLP:
     """
     Defining a Multi Layer Perceptron comprised by Linear Layers. 
@@ -41,7 +43,7 @@ class MLP:
         repr = "\n"
         repr += "MultiLayerPerceptron(\n"
         for i in self.net:
-            repr += "   " + i.__repr__() + "\n"
+            repr += "   " + i.__repr__() + ",\n"
         repr += ")\n"
 
         return repr

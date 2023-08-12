@@ -2,27 +2,28 @@ import numpy as np
 from nabla import Tensor 
 from nabla.nn.templates import MLP
 from nabla.nn.layers import Linear
-
-
-
+from nabla.utils import structures
 np.random.seed(0)
 DTYPE = np.float32 
 
-x = np.random.randn(10, 20)
-y = np.ones((10, 1))
 
-ytensor = Tensor(y)
+x = np.random.randn(100, 10)
+y = np.ones((100, 1))
+
+
+"""
+    xtensor has 100 samples, 10 features per sample
+    ytensor has 100 samples, 1 feature per sample
+"""
 xtensor = Tensor(x)
+ytensor = Tensor(y)
 
 structure = {
-    0:  [[20, 20], "relu"],
-    1:  [[20, 1], "relu"],
+    0:  [[10, 20], "relu"],
+    1:  [[20, 40], "relu"],
+    2:  [[40, 80], "relu"],
+    3:  [[80, 40], "relu"],
+    4:  [[40, 1], "relu"],
 }
 net = MLP(structure)
-
 print(net(xtensor).shape)
-
-
-# weight = Tensor(np.random.randn(40, 20))
-
-# print(weight.transpose().shape)
