@@ -1,4 +1,5 @@
 import numpy as np 
+from nabla.tensor import Tensor 
 
 __all__ = [
     "ReLU",
@@ -7,28 +8,28 @@ __all__ = [
     "Sigmoid"
 ]
 
-def ReLU(x:np.ndarray, dtype=np.float32) -> np.ndarray:
+def ReLU(x:Tensor, dtype=np.float32) -> np.ndarray:
     """
     Rectified Linear Unit
     """
-    return np.maximum(x, np.zeros((x.shape)))
+    return Tensor(np.maximum(x.data, np.zeros((x.shape))), requires_grad=True, operation="relu")
     
-def LeakyReLU(x:np.ndarray, slope:float=0.01) -> np.ndarray:
+def LeakyReLU(x:Tensor, slope:float=0.01) -> np.ndarray:
     """
         if x > 0: return x
         else:   return slope*x 
     """
-    return np.maximum(slope*x, x)
+    return Tensor(np.maximum(slope*x.data, x.data), requires_grad=True, operation="leakyrelu")
 
-def Tanh(x:np.ndarray) -> np.ndarray:
+def Tanh(x:Tensor) -> np.ndarray:
     """
     The Hyperbolic Tan activation function 
     """
-    return np.tanh(x)
+    return Tensor(np.tanh(x.data), requires_grad=True, operation="tanh")
 
-def Sigmoid(x:np.ndarray) -> np.ndarray:
+def Sigmoid(x:Tensor) -> np.ndarray:
     """
     The sigmoid activation function
     """
-    return np.exp(x)/(1 + np.exp(x))
+    return Tensor(np.exp(x.data)/(1 + np.exp(x.data)), requires_grad=True, operation="sigmoid")
 

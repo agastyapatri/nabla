@@ -19,11 +19,13 @@ xtensor = Tensor(x)
 ytensor = Tensor(y)
 
 structure = {
-    0:  [[10, 20], "relu"],
-    1:  [[20, 40], "relu"],
-    2:  [[40, 80], "relu"],
-    3:  [[80, 40], "relu"],
+    0:  [[10, 20], "sigmoid"],
+    1:  [[20, 40], "sigmoid"],
+    2:  [[40, 80], "sigmoid"],
+    3:  [[80, 40], "sigmoid"],
     4:  [[40, 1], "relu"],
 }
 net = MLP(structure)
-print(net(xtensor).shape)
+
+for weight in net.W:
+    print(isinstance(weight, Tensor))

@@ -2,6 +2,8 @@
 Loss Functions to be used during the training process
 """
 import numpy as np 
+from .tensor import Tensor 
+
 
 class MSELoss:
     """
@@ -9,10 +11,10 @@ class MSELoss:
     """
     def __call__(
             self, 
-            x:np.ndarray, 
-            y:np.ndarray
+            x:Tensor, 
+            y:Tensor
             ) -> np.ndarray:
-        return np.mean(np.square(x-y))
+        return Tensor(np.mean(np.square(x.data-y.data)), requires_grad=True, operation="mse")
     
     def grad(
             self, 
@@ -22,7 +24,7 @@ class MSELoss:
         """
         derivative of MSE with respect to x
         """
-        return 2*np.mean(x - y)
+        return Tensor(2*np.mean(x.data - y.data), requires_grad=True, operation="dmse")
 
 
 class CELoss:

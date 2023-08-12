@@ -37,6 +37,9 @@ class Tensor:
     
     def __matmul__(self, other):
         return Tensor(self.data @ other.data, requires_grad=(self.req_grad or other.req_grad), operation="matmul") 
+    
+    def __pow__(self, x) -> None:
+        return Tensor(self.data ** x, requires_grad=True, operation="power")
 
     #   other operations
     def mean(self, axis) -> None:
@@ -51,6 +54,7 @@ class Tensor:
     def sqrt(self, axis) -> None:
         return Tensor(np.sqrt(self.data), requires_grad=self.req_grad)    
     
+    #   transcendental functions
     def exp(self, ):
         return Tensor(np.exp(self.data), requires_grad=self.req_grad)
     
