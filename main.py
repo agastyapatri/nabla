@@ -1,14 +1,14 @@
 import numpy as np 
-from nabla import Tensor 
-from nabla.nn.templates import MLP
-from nabla.nn.layers import Linear
-from nabla.utils import structures
 np.random.seed(0)
 DTYPE = np.float32 
 
+from nabla import Tensor 
+from nabla.nn.templates import MLP
+# from nabla import backprop
+from nabla.nn.layers import Linear
 
-x = np.random.randn(100, 10)
-y = np.ones((100, 1))
+x = np.random.randn(100, 784)
+y = np.ones((100, 10))
 
 
 """
@@ -18,14 +18,33 @@ y = np.ones((100, 1))
 xtensor = Tensor(x)
 ytensor = Tensor(y)
 
+# Defning the Multilayer Perceptron
 structure = {
-    0:  [[10, 20], "sigmoid"],
-    1:  [[20, 40], "sigmoid"],
-    2:  [[40, 80], "sigmoid"],
-    3:  [[80, 40], "sigmoid"],
-    4:  [[40, 1], "relu"],
+    0:  [[784, 392], "relu"],
+    1:  [[392, 196], "relu"],
+    2:  [[196, 10], "relu"],
 }
 net = MLP(structure)
 
-for weight in net.W:
-    print(isinstance(weight, Tensor))
+def backprop(x):
+    """
+    Performing simple backpropagation 
+
+    1.  forward pass; collect z's and a's for the 
+    """
+    Z = []
+    A = []
+    
+    #   forward pass; collecting activations and weighted sums
+    i = 0 
+    z = x
+    while i<len(net):
+        z, a = net[i].forward(z)
+        Z.append(z)
+        A.append(a)
+        i+=1
+    
+
+
+backprop(xtensor)
+

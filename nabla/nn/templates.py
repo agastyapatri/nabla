@@ -52,3 +52,10 @@ class MLP:
 
     def __len__(self, ) -> int:
         return len(self.net)
+
+
+class CONV:
+    def __init__(self, ) -> None:
+        pass
+if __name__ == "__main__":
+    pass

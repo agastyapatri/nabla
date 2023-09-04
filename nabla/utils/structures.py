@@ -1,20 +1,23 @@
 """
 All the ways of defining Neural Networks
 """
+from nabla.tensor import Tensor  
 
-from nabla.tensor import Tensor 
 
-class Sequential:
+class Structure:
+    """
+    A clone of torch.nn.Sequential
+    
+    [args]:
+    """
     def __init__(self, ) -> None:
         pass
-    pass
-
-
-class Compose:
-    def __init__(self, ) -> None:
+    
+    def __getitem__(self, i) -> None:
         pass
-    pass
 
+    def __call__(self, layers:list) -> None:
+        return layers 
 
-if __name__ == "__main__":
-    pass
+    
+

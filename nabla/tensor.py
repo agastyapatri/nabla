@@ -1,7 +1,6 @@
 import numpy as np 
 np.random.seed(0)
 
-
 class Tensor:
     """
     The Central data structure of NABLA. This is built on top of np.ndarrays to enable computational graphs and autodiff.
@@ -26,39 +25,39 @@ class Tensor:
 
 
     #   Arithmetic Operations
-    def __add__(self, other) -> None:
-        return Tensor(self.data + other.data, requires_grad=(self.req_grad or other.req_grad), operation="add")
+    def __add__(self, other):
+        return Tensor(self.data + other.data, requires_grad=True, operation="add")
     
-    def __sub__(self, other) -> None:
-        return Tensor(self.data - other.data, requires_grad=(self.req_grad or other.req_grad), operation="sub")
+    def __sub__(self, other):
+        return Tensor(self.data - other.data, requires_grad=True, operation="sub")
     
-    def __mul__(self, other) -> None:
-        return Tensor(self.data * other.data, requires_grad=(self.req_grad or other.req_grad), operation="mul")
+    def __mul__(self, other):
+        return Tensor(self.data * other.data, requires_grad=True, operation="mul")
     
     def __matmul__(self, other):
-        return Tensor(self.data @ other.data, requires_grad=(self.req_grad or other.req_grad), operation="matmul") 
+        return Tensor(self.data @ other.data, requires_grad=True, operation="matmul") 
     
-    def __pow__(self, x) -> None:
+    def __pow__(self, x):
         return Tensor(self.data ** x, requires_grad=True, operation="power")
 
     #   other operations
-    def mean(self, axis) -> None:
+    def mean(self, axis):
         return Tensor(np.mean(self.data, axis=axis))    
   
-    def std(self, axis) -> None:
+    def std(self, axis):
         return Tensor(np.std(self.data, axis=axis))    
     
-    def max(self, axis) -> None:
+    def max(self, axis):
         return Tensor(np.max(self.data, axis=axis))    
     
-    def sqrt(self, axis) -> None:
+    def sqrt(self,):
         return Tensor(np.sqrt(self.data), requires_grad=self.req_grad)    
     
     #   transcendental functions
     def exp(self, ):
         return Tensor(np.exp(self.data), requires_grad=self.req_grad)
     
-    def exp(self, ):
+    def log(self, ):
         return Tensor(np.log(self.data), requires_grad=self.req_grad)
     
     def sin(self, ):
@@ -70,10 +69,10 @@ class Tensor:
     def tanh(self, ):
         return Tensor(np.tanh(self.data), requires_grad=self.req_grad)
 
-    def reshape(self, size:tuple) -> None:
+    def reshape(self, size:tuple):
         return Tensor(np.reshape(self.data, size), requires_grad=self.req_grad)
     
-    def transpose(self, ) -> None:
+    def transpose(self, ):
         return Tensor(self.data.T, requires_grad=self.req_grad)
 
     #   Metadata
@@ -86,7 +85,7 @@ class Tensor:
         repr += "\n)"
         return repr 
     
-    def __getitem__(self, i) -> None:
+    def __getitem__(self, i):
         return self.data[i]
 
     def __len__(self, ) -> int:
@@ -94,9 +93,7 @@ class Tensor:
 
 
 
-
-
 if __name__ == "__main__":
     x = np.random.randn(10, 10)
     xtensor = Tensor(x)
-    print(xtensor)
+    print(xtensor.shape)

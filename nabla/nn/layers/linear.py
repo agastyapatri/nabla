@@ -1,6 +1,6 @@
 import numpy as np
 import scipy as sp
-from nabla.nn import activations
+from nabla.utils import activations
 from nabla.tensor import Tensor 
 
 DTYPE = np.float32
