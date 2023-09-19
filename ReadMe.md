@@ -1,3 +1,5 @@
+**THIS PROJECT IS PAUSED**
+
 #   **NABLA**
 _Deep Learning from (almost) scratch_
 
